@@ -1,0 +1,10 @@
+target 'MOGOpenBookSegue', :exclusive => true do
+  pod "MOGOpenBookSegue", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "MOGOpenBookSegue", :path => "../"
+
+  pod 'Kiwi'
+  pod 'FBSnapshotTestCase'
+end
