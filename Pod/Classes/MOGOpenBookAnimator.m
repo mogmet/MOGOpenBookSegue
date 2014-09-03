@@ -43,6 +43,25 @@
     [self closeBookView:transitionContext fromViewController:fromViewController toViewController:toViewController];
 }
 
+/**
+ *  アニメ完了時にblock実行
+ *
+ *  @param transitionCompleted
+ */
+- (void)animationEnded:(BOOL) transitionCompleted {
+    if (self.presenting) {
+        if (self.openCompletion) {
+            self.openCompletion(transitionCompleted);
+        }
+        return;
+    }
+    if (self.closeCompletion) {
+        if (self.closeCompletion) {
+            self.closeCompletion(transitionCompleted);
+        }
+    }
+}
+
 #pragma mark -- private method --
 
 /**
