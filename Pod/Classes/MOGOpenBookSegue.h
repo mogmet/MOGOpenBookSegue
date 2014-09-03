@@ -8,7 +8,7 @@
 
 #import "MOGOpenBookAnimator.h"
 
-@interface MOGOpenBookSegue : UIStoryboardSegue <UIViewControllerTransitioningDelegate>
+@interface MOGOpenBookSegue : UIStoryboardSegue <UIViewControllerTransitioningDelegate, MOGOpenBookSegueAnimatorDelegate>
 
 - (void)setupBookView:(UIImage *)bookImage frame:(CGRect)frame;
 - (void)setDurationTime:(NSTimeInterval)duration;

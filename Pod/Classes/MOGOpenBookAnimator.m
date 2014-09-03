@@ -22,7 +22,7 @@
  *
  *  @return アニメーション時間
  */
-- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext {
+- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning> )transitionContext {
     NSTimeInterval duration = self.transitionDuration ? self.transitionDuration : 1.0f;
     return duration;
 }
@@ -32,9 +32,9 @@
  *
  *  @param transitionContext
  */
-- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
+- (void)animateTransition:(id <UIViewControllerContextTransitioning> )transitionContext {
     UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIViewController *toViewController   = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     [transitionContext.containerView addSubview:self.bookView];
     if (self.presenting) {
         [self openBookView:transitionContext fromViewController:fromViewController toViewController:toViewController];
@@ -48,17 +48,20 @@
  *
  *  @param transitionCompleted
  */
-- (void)animationEnded:(BOOL) transitionCompleted {
+- (void)animationEnded:(BOOL)transitionCompleted {
     if (self.presenting) {
         if (self.openCompletion) {
             self.openCompletion(transitionCompleted);
+            self.openCompletion = nil;
         }
         return;
     }
     if (self.closeCompletion) {
         if (self.closeCompletion) {
             self.closeCompletion(transitionCompleted);
+            self.closeCompletion = nil;
         }
+        [self.delegate closeCompletion];
     }
 }
 
@@ -70,14 +73,13 @@
  *  @param scaleX
  *  @param scaleY
  */
-- (void)prepareOpenBookAnimation:(CGFloat)scaleX scaleY:(CGFloat)scaleY
-{
+- (void)prepareOpenBookAnimation:(CGFloat)scaleX scaleY:(CGFloat)scaleY {
     [self.bookView insertSubview:self.bookView.content aboveSubview:self.bookView.cover];
-    self.bookView.content.transform = CGAffineTransformMakeScale(1/scaleX, 1/scaleY);
-    self.bookView.content.frame = CGRectMake(0, 0,CGRectGetWidth(self.bookView.frame), CGRectGetHeight(self.bookView.frame));
+    self.bookView.content.transform       = CGAffineTransformMakeScale(1 / scaleX, 1 / scaleY);
+    self.bookView.content.frame           = CGRectMake(0, 0, CGRectGetWidth(self.bookView.frame), CGRectGetHeight(self.bookView.frame));
     self.bookView.cover.layer.anchorPoint = CGPointMake(0, 0.5);
-    self.bookView.cover.center = CGPointMake(0.0, self.bookView.cover.bounds.size.height/2.0); //compensate for anchor offset
-    self.bookView.cover.opaque = YES;
+    self.bookView.cover.center            = CGPointMake(0.0, self.bookView.cover.bounds.size.height / 2.0); // compensate for anchor offset
+    self.bookView.cover.opaque            = YES;
 }
 
 /**
@@ -87,8 +89,7 @@
  *  @param fromViewController
  *  @param toViewController
  */
-- (void)openBookView:(id <UIViewControllerContextTransitioning>)transitionContext fromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController
-{
+- (void)openBookView:(id <UIViewControllerContextTransitioning> )transitionContext fromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController {
     fromViewController.view.userInteractionEnabled = NO;
     CGFloat scaleX = fromViewController.view.bounds.size.width / self.bookView.bounds.size.width;
     CGFloat scaleY = fromViewController.view.bounds.size.height / self.bookView.bounds.size.height;
@@ -98,8 +99,8 @@
     bookViewOrignCenter = self.bookView.center;
     CATransform3D transformblank = CATransform3DMakeRotation(-M_PI_2 / 1.01, 0.0, 1.0, 0.0);
     transformblank.m34 = 1.0f / 250.0f;
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionShowHideTransitionViews animations:^{
-        self.bookView.transform = CGAffineTransformMakeScale(scaleX,scaleY);
+    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionShowHideTransitionViews animations:^{
+        self.bookView.transform = CGAffineTransformMakeScale(scaleX, scaleY);
         self.bookView.center = fromViewController.view.center;
         self.bookView.cover.layer.transform = transformblank;
         [self.bookView bringSubviewToFront:self.bookView.cover];
@@ -109,7 +110,6 @@
             [transitionContext completeTransition:YES];
         }
     } ];
-    
 }
 
 /**
@@ -117,13 +117,12 @@
  *
  *  @param transitionContext
  *  @param fromViewController
- *  @param toViewController   
+ *  @param toViewController
  */
-- (void)closeBookView:(id <UIViewControllerContextTransitioning>)transitionContext fromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController
-{
+- (void)closeBookView:(id <UIViewControllerContextTransitioning> )transitionContext fromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController {
     toViewController.view.userInteractionEnabled = YES;
-    self.bookView.cover.layer.hidden = NO;
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionShowHideTransitionViews animations:^{
+    self.bookView.cover.layer.hidden             = NO;
+    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionShowHideTransitionViews animations:^{
         self.bookView.center = bookViewOrignCenter;
         self.bookView.transform = CGAffineTransformIdentity;
         self.bookView.cover.layer.transform = CATransform3DIdentity;
@@ -133,6 +132,6 @@
             [transitionContext completeTransition:YES];
         }
     } ];
-    
 }
+
 @end

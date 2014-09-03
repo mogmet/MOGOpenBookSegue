@@ -11,8 +11,7 @@
 
 @implementation MOGBookView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _cover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame))];
@@ -21,9 +20,8 @@
     return self;
 }
 
-- (void)setupBookCoverImage:(UIImage *)image
-{
-    _cover.layer.contents = (__bridge id)(image.CGImage);
+- (void)setupBookCoverImage:(UIImage *)image {
+    _cover.layer.contents = (__bridge id) (image.CGImage);
 }
 
 @end
