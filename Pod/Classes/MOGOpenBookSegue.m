@@ -13,6 +13,8 @@
     MOGOpenBookAnimator *animator;
 }
 
+static MOGOpenBookSegue *sharedManager;
+
 /**
  *  performがおわるとdeallocされてカバーviewや中心点がわからなくなるのでシングルトンで初期化
  *
@@ -23,12 +25,11 @@
  *  @return MOGOpenBookSegue
  */
 - (id)initWithIdentifier:(NSString *)identifier source:(UIViewController *)source destination:(UIViewController *)destination {
-    static MOGOpenBookSegue *sharedManager;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedManager = [super initWithIdentifier:identifier source:source destination:destination];
-        animator = [MOGOpenBookAnimator new];
-    });
+    @synchronized(self) {
+        if (!sharedManager) {
+            sharedManager = [super initWithIdentifier:identifier source:source destination:destination];
+        }
+    }
     return sharedManager;
 }
 
@@ -37,8 +38,8 @@
  */
 - (void)perform {
     UIViewController *destinationViewController = self.destinationViewController;
-    UIViewController *sourceViewController = self.sourceViewController;
-    destinationViewController.transitioningDelegate = self;
+    UIViewController *sourceViewController      = self.sourceViewController;
+    destinationViewController.transitioningDelegate  = self;
     destinationViewController.modalPresentationStyle = UIModalPresentationCustom;
     [sourceViewController presentViewController:destinationViewController animated:YES completion:nil];
 }
@@ -50,6 +51,8 @@
  *  @param frame     開く元の画像の位置
  */
 - (void)setupBookView:(UIImage *)bookImage frame:(CGRect)frame {
+    animator          = [MOGOpenBookAnimator new];
+    animator.delegate = self;
     animator.bookView = [[MOGBookView alloc] initWithFrame:frame];
     [animator.bookView setupBookCoverImage:bookImage];
 }
@@ -70,8 +73,16 @@
  *  @param closeCompletion closeしおわったあとのblock
  */
 - (void)setCompletionBlock:(MOGOpenBookSegueCompletionBlock)openCompletion closeCompletion:(MOGOpenBookSegueCompletionBlock)closeCompletion {
-    animator.openCompletion = [openCompletion copy];
+    animator.openCompletion  = [openCompletion copy];
     animator.closeCompletion = [closeCompletion copy];
+}
+
+/**
+ *  閉じた時に呼ばれる。nilをいれないと遷移先ViewControllerが開放されない
+ */
+- (void)closeCompletion {
+    animator      = nil;
+    sharedManager = nil;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate Methods
@@ -85,10 +96,9 @@
  *
  *  @return MOGOpenBookAnimator
  */
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
-                                                                   presentingController:(UIViewController *)presenting
-                                                                       sourceController:(UIViewController *)source {
-    
+- (id <UIViewControllerAnimatedTransitioning> )animationControllerForPresentedController:(UIViewController *)presented
+                                                                    presentingController:(UIViewController *)presenting
+                                                                        sourceController:(UIViewController *)source {
     animator.presenting = YES;
     return animator;
 }
@@ -100,8 +110,9 @@
  *
  *  @return MOGOpenBookAnimator
  */
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+- (id <UIViewControllerAnimatedTransitioning> )animationControllerForDismissedController:(UIViewController *)dismissed {
     animator.presenting = NO;
     return animator;
 }
+
 @end
