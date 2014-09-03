@@ -13,6 +13,6 @@ typedef void (^MOGOpenBookSegueCompletionBlock)(BOOL transitionCompleted);
 @property (nonatomic, assign, getter = isPresenting) BOOL presenting;
 @property (strong, nonatomic) MOGBookView *bookView;
 @property (nonatomic) NSTimeInterval transitionDuration;
-@property (nonatomic, weak) MOGOpenBookSegueCompletionBlock openCompletion;
-@property (nonatomic, weak) MOGOpenBookSegueCompletionBlock closeCompletion;
+@property (nonatomic, strong) MOGOpenBookSegueCompletionBlock openCompletion;
+@property (nonatomic, strong) MOGOpenBookSegueCompletionBlock closeCompletion;
 @end
