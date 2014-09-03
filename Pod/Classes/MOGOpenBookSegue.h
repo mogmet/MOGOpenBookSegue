@@ -6,10 +6,11 @@
 //  Copyright (c) 2014年 mogmet. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "MOGOpenBookAnimator.h"
 
 @interface MOGOpenBookSegue : UIStoryboardSegue <UIViewControllerTransitioningDelegate>
 
 - (void)setupBookView:(UIImage *)bookImage frame:(CGRect)frame;
 - (void)setDurationTime:(NSTimeInterval)duration;
+- (void)setCompletionBlock:(MOGOpenBookSegueCompletionBlock)openCompletion closeCompletion:(MOGOpenBookSegueCompletionBlock)closeCompletion;
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "MOGOpenBookSegue.h"
-#import "MOGOpenBookAnimator.h"
 
 @implementation MOGOpenBookSegue
 {
@@ -62,6 +61,17 @@
  */
 - (void)setDurationTime:(NSTimeInterval)duration {
     animator.transitionDuration = duration;
+}
+
+/**
+ *  アニメ終了時のblockを設定
+ *
+ *  @param openCompletion     openしおわったあとのblock
+ *  @param closeCompletion closeしおわったあとのblock
+ */
+- (void)setCompletionBlock:(MOGOpenBookSegueCompletionBlock)openCompletion closeCompletion:(MOGOpenBookSegueCompletionBlock)closeCompletion {
+    animator.openCompletion = openCompletion;
+    animator.closeCompletion = closeCompletion;
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate Methods

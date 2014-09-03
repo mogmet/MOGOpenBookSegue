@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "MOGBookView.h"
+typedef void (^MOGOpenBookSegueCompletionBlock)(BOOL transitionCompleted);
 @interface MOGOpenBookAnimator : NSObject <UIViewControllerAnimatedTransitioning>
 @property (nonatomic, assign, getter = isPresenting) BOOL presenting;
 @property (strong, nonatomic) MOGBookView *bookView;
 @property (nonatomic) NSTimeInterval transitionDuration;
+@property (nonatomic, weak) MOGOpenBookSegueCompletionBlock openCompletion;
+@property (nonatomic, weak) MOGOpenBookSegueCompletionBlock closeCompletion;
 @end
