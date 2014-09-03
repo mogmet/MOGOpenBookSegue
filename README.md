@@ -28,18 +28,19 @@ MOGOpenBookSegue is custom segue like iBooks open animation.
         [super prepareForSegue:segue sender:sender];
     }
     ```
+
 * If you want to change duration time, add this code. Default is 1.0f.
-    ```objectivec
-        [segue setDurationTime:3.0f];
-    ```
+```objectivec
+    [segue setDurationTime:3.0f];
+```
 * If you want to do something after animation, you can add this code.
-    ```objectivec
-        [segue setCompletionBlock:^(BOOL transitionCompleted) {
-            NSLog(@"open!");
-        } closeCompletion:^(BOOL transitionCompleted) {
-            NSLog(@"close!");
-        }];
-    ```
+```objectivec
+    [segue setCompletionBlock:^(BOOL transitionCompleted) {
+        NSLog(@"open!");
+    } closeCompletion:^(BOOL transitionCompleted) {
+        NSLog(@"close!");
+    }];
+```
 
 ## Installation
 
