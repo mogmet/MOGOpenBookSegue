@@ -2,6 +2,8 @@
 
 MOGOpenBookSegue is custom segue like iBooks open animation.
 
+![sample](https://raw.githubusercontent.com/mogmet/MOGOpenBookSegue/master/open-book-animation.gif)
+
 ## Usage
 
 1. To run the example project, clone the repo, and run `pod install` from the Example directory first.
