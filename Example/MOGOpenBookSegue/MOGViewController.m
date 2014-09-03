@@ -7,6 +7,7 @@
 //
 
 #import "MOGViewController.h"
+#import <MOGOpenBookSegue/MOGOpenBookSegue.h>
 
 @interface MOGViewController ()
 
@@ -14,16 +15,9 @@
 
 @implementation MOGViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)prepareForSegue:(MOGOpenBookSegue *)segue sender:(id)sender {
+    [segue setupBookView:self.coverImageButton.imageView.image frame:self.coverImageButton.frame];
+    [super prepareForSegue:segue sender:sender];
 }
 
 @end

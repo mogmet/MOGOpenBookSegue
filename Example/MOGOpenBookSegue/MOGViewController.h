@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MOGViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIButton *coverImageButton;
 
 @end
