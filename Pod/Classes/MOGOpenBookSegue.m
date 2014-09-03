@@ -70,8 +70,8 @@
  *  @param closeCompletion closeしおわったあとのblock
  */
 - (void)setCompletionBlock:(MOGOpenBookSegueCompletionBlock)openCompletion closeCompletion:(MOGOpenBookSegueCompletionBlock)closeCompletion {
-    animator.openCompletion = openCompletion;
-    animator.closeCompletion = closeCompletion;
+    animator.openCompletion = [openCompletion copy];
+    animator.closeCompletion = [closeCompletion copy];
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate Methods
