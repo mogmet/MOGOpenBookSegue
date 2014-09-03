@@ -57,12 +57,10 @@
         return;
     }
     if (self.closeCompletion) {
-        if (self.closeCompletion) {
-            self.closeCompletion(transitionCompleted);
-            self.closeCompletion = nil;
-        }
-        [self.delegate closeCompletion];
+        self.closeCompletion(transitionCompleted);
+        self.closeCompletion = nil;
     }
+    [self.delegate closeCompletion];
 }
 
 #pragma mark -- private method --
