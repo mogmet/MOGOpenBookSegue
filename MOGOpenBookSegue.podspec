@@ -9,13 +9,13 @@
 
 Pod::Spec.new do |s|
   s.name             = "MOGOpenBookSegue"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of MOGOpenBookSegue."
+  s.version          = "1.0.1"
+  s.summary          = "MOGOpenBookSegue is custom segue like iBooks open animation."
   s.description      = <<-DESC
                        # MOGOpenBookSegue
                        * This is custom segue like iBooks open animation.
                        DESC
-  s.homepage         = "https://github.com/mogmet/MOGOpenBookSegue"
+  s.homepage         = "https://blog.mogmet.com/"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "mogmet" => "mogmet@gmail.com" }
