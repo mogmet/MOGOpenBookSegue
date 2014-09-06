@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
                        # MOGOpenBookSegue
                        * This is custom segue like iBooks open animation.
                        DESC
-  s.homepage         = "http://blog.mogmet.com/"
+  s.homepage         = "https://github.com/mogmet/MOGOpenBookSegue"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "mogmet" => "mogmet@gmail.com" }
