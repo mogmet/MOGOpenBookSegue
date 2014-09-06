@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "MOGOpenBookSegue"
-  s.version          = "1.0.1"
+  s.version          = "1.0.2"
   s.summary          = "MOGOpenBookSegue is custom segue like iBooks open animation."
   s.description      = <<-DESC
                        # MOGOpenBookSegue
